@@ -1,15 +1,15 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { observer, inject } from '@tarojs/mobx'
-import { View } from '@tarojs/components'
-import { AtButton, AtMessage, AtModal } from 'taro-ui'
+import Taro, { Component, Config } from "@tarojs/taro"
+import { observer, inject } from "@tarojs/mobx"
+import { View } from "@tarojs/components"
+import { AtButton, AtMessage, AtModal } from "taro-ui"
 
-import { IPost, IPostCreate } from '@/models/post'
-import { IAppStore, IPostStore } from '@/store'
+import { IPostCreate } from "@/models/post"
+import { IAppStore, IPostStore } from "@/store"
 
-import PostForm from '@/components/PostForm'
-import { apiGetPost } from '@/apis/post'
+import PostForm from "@/components/PostForm"
+import { apiGetPost } from "@/apis/post"
 
-import './styles.less'
+import "./styles.less"
 
 interface IProps {
   appStore: IAppStore
@@ -24,20 +24,20 @@ interface IState {
   visibleRemove: boolean
 }
 
-@inject('appStore', 'postStore')
+@inject("appStore", "postStore")
 @observer
 export default class PostEdit extends Component<IProps, IState> {
   state = {
-    id: '',
+    id: "",
     loaded: false,
 
     data: {
-      img: '',
-      content: '',
-      from: '',
+      img: "",
+      content: "",
+      from: ""
     },
 
-    visibleRemove: false,
+    visibleRemove: false
   }
 
   componentDidMount() {
@@ -45,21 +45,21 @@ export default class PostEdit extends Component<IProps, IState> {
   }
 
   config: Config = {
-    navigationBarTitleText: 'Edit',
+    navigationBarTitleText: "Edit"
   }
 
   onInit = () => {
-    const { id = '' } = this.$router.params
+    const { id = "" } = this.$router.params
     this.setState({ id }, this.getDetial)
   }
 
   getDetial = async () => {
     try {
-      const { id = '' } = this.state
+      const { id = "" } = this.state
       const { img, content, from } = await apiGetPost(id)
       this.setState({ loaded: true, data: { img, content, from } })
     } catch (err) {
-      console.log('获取帖子详情失败(重编辑)', err)
+      console.log("获取帖子详情失败(重编辑)", err)
     }
   }
 
@@ -72,15 +72,15 @@ export default class PostEdit extends Component<IProps, IState> {
     const { content, from, img } = this.state.data
 
     if (!content) {
-      Taro.atMessage({ message: 'input your words', type: 'warning' })
+      Taro.atMessage({ message: "input your words", type: "warning" })
       return
     }
     if (!from) {
-      Taro.atMessage({ message: 'input the source', type: 'warning' })
+      Taro.atMessage({ message: "input the source", type: "warning" })
       return
     }
     if (!img) {
-      Taro.atMessage({ message: 'choose an image', type: 'warning' })
+      Taro.atMessage({ message: "choose an image", type: "warning" })
       return
     }
 
@@ -88,7 +88,7 @@ export default class PostEdit extends Component<IProps, IState> {
       await this.props.postStore.update({ id, ...this.state.data })
       Taro.navigateBack()
     } catch (err) {
-      console.log('修改帖子失败', err)
+      console.log("修改帖子失败", err)
     }
   }
 
@@ -99,27 +99,27 @@ export default class PostEdit extends Component<IProps, IState> {
 
   onRemove = async () => {
     try {
-      const { id = '' } = this.state
+      const { id = "" } = this.state
       await this.props.postStore.remove(id)
-      Taro.navigateBack()
     } catch (err) {
-      console.log('删除帖子失败', err)
+      console.log("删除帖子失败", err)
     }
   }
 
   render() {
     const {
-      appStore: { isFullScreen },
+      appStore: { isFullScreen }
     } = this.props
 
     const {
       loaded,
       data: { img, content, from },
-      visibleRemove,
+      visibleRemove
     } = this.state
     return (
-      <View className={isFullScreen ? 'container full-screen' : 'container'}>
+      <View className={isFullScreen ? "container full-screen" : "container"}>
         <AtMessage />
+
         <AtModal
           isOpened={visibleRemove}
           title="Warning"
@@ -133,7 +133,7 @@ export default class PostEdit extends Component<IProps, IState> {
 
         {loaded && <PostForm data={{ img, content, from }} onChange={this.onFormChange} />}
 
-        <View className={isFullScreen ? 'submit-bar full-screen' : 'submit-bar'}>
+        <View className={isFullScreen ? "submit-bar full-screen" : "submit-bar"}>
           <View className="btn">
             <AtButton
               type="secondary"
@@ -141,7 +141,7 @@ export default class PostEdit extends Component<IProps, IState> {
                 this.setState({ visibleRemove: true })
               }}
             >
-              Remove
+              Remove0000
             </AtButton>
           </View>
           <View className="btn">

@@ -1,9 +1,10 @@
 /**
  * @description 首页的全部帖子列表
  */
-import { observable, action, computed, runInAction } from 'mobx'
-import { IPostCreate, IPost } from '@/models/post'
-import { apiUploadFile, apiDeleteFile } from '@/apis/files'
+import Taro from "@tarojs/taro"
+import { observable, action, computed, runInAction } from "mobx"
+import { IPostCreate, IPost } from "@/models/post"
+import { apiUploadFile, apiDeleteFile } from "@/apis/files"
 import {
   IUpdateParams,
   apiGetPosts,
@@ -12,8 +13,8 @@ import {
   apiRemovePost,
   apiUpdatePost,
   apiLike,
-  apiCollect,
-} from '@/apis/post'
+  apiCollect
+} from "@/apis/post"
 
 const CLOUD_FILE_PATH_REGX = /^cloud/ //云存储文件的路径
 
@@ -96,21 +97,22 @@ class PostStore implements IPostStore {
   }
 
   @action
-  remove = async (id = '') => {
+  remove = async (id = "") => {
     const { img } = await apiGetPost(id)
     await apiDeleteFile(img)
     await apiRemovePost(id)
+    Taro.navigateBack({ delta: 2 })
     this.getPosts()
   }
 
   @action
-  toggleLike = async (id = '') => {
+  toggleLike = async (id = "") => {
     await apiLike(id)
     this.getPosts()
   }
 
   @action
-  toggleCollect = async (id = '') => {
+  toggleCollect = async (id = "") => {
     await apiCollect(id)
     this.getPosts()
   }

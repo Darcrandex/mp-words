@@ -4,7 +4,6 @@ import { Provider } from "@tarojs/mobx"
 import store from "./store"
 
 import Index from "./pages/index"
-import "./app.less"
 import "./styles/custom-theme.scss"
 
 class App extends Component {

@@ -1,13 +1,13 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { observer, inject } from '@tarojs/mobx'
-import { View } from '@tarojs/components'
-import { AtButton, AtMessage } from 'taro-ui'
+import Taro, { Component, Config } from "@tarojs/taro"
+import { observer, inject } from "@tarojs/mobx"
+import { View } from "@tarojs/components"
+import { AtButton, AtMessage } from "taro-ui"
 
-import { IPostStore } from '@/store'
-import PostForm from '@/components/PostForm'
-import { IPostCreate } from '@/models/post'
+import { IPostStore } from "@/store"
+import PostForm from "@/components/PostForm"
+import { IPostCreate } from "@/models/post"
 
-import './styles.less'
+import "./styles.less"
 
 interface IProps {
   postStore: IPostStore
@@ -19,19 +19,19 @@ interface State {
   [key: string]: any
 }
 
-@inject('postStore')
+@inject("postStore")
 @observer
 export default class PostEdit extends Component<IProps, State> {
   state = {
     data: {
-      img: '',
-      content: '',
-      from: '',
-    },
+      img: "",
+      content: "",
+      from: ""
+    }
   }
 
   config: Config = {
-    navigationBarTitleText: 'New',
+    navigationBarTitleText: "New"
   }
 
   onFormChange = (data: IPostCreate) => {
@@ -42,25 +42,25 @@ export default class PostEdit extends Component<IProps, State> {
     const { content, from, img } = this.state.data
 
     if (!content) {
-      Taro.atMessage({ message: 'input your words', type: 'warning' })
+      Taro.atMessage({ message: "input your words", type: "warning" })
       return
     }
     if (!from) {
-      Taro.atMessage({ message: 'input the source', type: 'warning' })
+      Taro.atMessage({ message: "input the source", type: "warning" })
       return
     }
     if (!img) {
-      Taro.atMessage({ message: 'choose an image', type: 'warning' })
+      Taro.atMessage({ message: "choose an image", type: "warning" })
       return
     }
 
     try {
       await this.props.postStore.add({ content, from, img })
-      this.setState({ data: { img: '', content: '', from: '' } })
+      this.setState({ data: { img: "", content: "", from: "" } })
 
-      Taro.switchTab({ url: '/pages/index/index' })
+      Taro.switchTab({ url: "/pages/index/index" })
     } catch (err) {
-      console.error('新增失败', err)
+      console.error("新增失败", err)
     }
   }
 

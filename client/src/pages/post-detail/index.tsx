@@ -44,10 +44,10 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
     },
     imageLoaded: false,
     avatarLoaded: false,
+    imageRealHeight: 0.5 * DESIGN_WIDTH + "rpx",
 
-    editable: false,
-
-    imageRealHeight: 0.5 * DESIGN_WIDTH + "rpx"
+    isError: false,
+    editable: false
   }
 
   componentDidShow() {
@@ -68,6 +68,7 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
 
       this.setState({ data, editable })
     } catch (err) {
+      this.setState({ isError: true })
       console.log("获取帖子详情失败", err)
     }
   }
@@ -85,7 +86,7 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
   }
 
   render() {
-    const { data, editable, imageLoaded, imageRealHeight } = this.state
+    const { data, editable, imageLoaded, imageRealHeight, isError } = this.state
     const { year, month, date } = dateFormatEN(data.createDate)
     const dateStr = `${date} ${month} ${year}`
 
@@ -119,20 +120,22 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
           <Text className="info-date">{dateStr}</Text>
         </View>
 
-        <View className="operation-bar">
-          <View
-            className={data.like ? "at-icon at-icon-heart-2 btn" : "at-icon at-icon-heart btn"}
-          ></View>
-          <View
-            className={data.collect ? "at-icon at-icon-star-2 btn" : "at-icon at-icon-star btn"}
-          ></View>
-          {editable && (
+        {!isError && (
+          <View className="operation-bar">
             <View
-              className="at-icon at-icon-edit btn"
-              onClick={() => Taro.navigateTo({ url: "/pages/post-edit/index?id=" + data._id })}
+              className={data.like ? "at-icon at-icon-heart-2 btn" : "at-icon at-icon-heart btn"}
             ></View>
-          )}
-        </View>
+            <View
+              className={data.collect ? "at-icon at-icon-star-2 btn" : "at-icon at-icon-star btn"}
+            ></View>
+            {editable && (
+              <View
+                className="at-icon at-icon-edit btn"
+                onClick={() => Taro.navigateTo({ url: "/pages/post-edit/index?id=" + data._id })}
+              ></View>
+            )}
+          </View>
+        )}
       </View>
     )
   }
