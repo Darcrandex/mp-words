@@ -1,10 +1,10 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { observer, inject } from '@tarojs/mobx'
-import { View } from '@tarojs/components'
+import Taro, { Component, Config } from "@tarojs/taro"
+import { observer, inject } from "@tarojs/mobx"
+import { View } from "@tarojs/components"
 
-import { IAppStore, IPostStore } from '@/store'
-import CardItem from '@/components/CardItem'
-import './styles.less'
+import { IAppStore, IPostStore } from "@/store"
+import CardItem from "@/components/CardItem"
+import "./styles.less"
 
 interface IProps {
   appStore?: IAppStore
@@ -12,7 +12,7 @@ interface IProps {
   [key: string]: any
 }
 
-@inject('appStore', 'postStore')
+@inject("appStore", "postStore")
 @observer
 export default class Index extends Component<IProps> {
   componentDidMount() {
@@ -29,15 +29,16 @@ export default class Index extends Component<IProps> {
     if (id) {
       // 为了修复初始化时,直接跳转导致没有重置loading状态,顶部一直有loading的bug
       Taro.stopPullDownRefresh()
-      Taro.navigateTo({ url: '/pages/post-detail/index?id=' + id })
+      Taro.navigateTo({ url: "/pages/post-detail/index?id=" + id })
     }
   }
 
   onShareAppMessage(options: any) {
+    // 自定义分享内容
     return {
       title: options!.target!.dataset!.content,
-      path: '/pages/index/index?id=' + options!.target!.dataset!.id,
-      imageUrl: options!.target!.dataset!.img,
+      path: "/pages/index/index?id=" + options!.target!.dataset!.id,
+      imageUrl: options!.target!.dataset!.img
     }
   }
 
@@ -45,7 +46,7 @@ export default class Index extends Component<IProps> {
     try {
       await this.props.postStore!.getPosts()
     } catch (err) {
-      console.error('加载失败', err)
+      console.error("加载失败", err)
     } finally {
       Taro.stopPullDownRefresh()
     }
@@ -55,14 +56,14 @@ export default class Index extends Component<IProps> {
     try {
       await this.props.postStore!.loadMore()
     } catch (err) {
-      console.error('加载失败', err)
+      console.error("加载失败", err)
     }
   }
 
   config: Config = {
-    navigationBarTitleText: 'Words',
+    navigationBarTitleText: "Words",
     enablePullDownRefresh: true,
-    onReachBottomDistance: 100,
+    onReachBottomDistance: 100
   }
 
   render() {
@@ -70,7 +71,7 @@ export default class Index extends Component<IProps> {
 
     return (
       <View>
-        {list.map(v => (
+        {list.map((v) => (
           <CardItem key={v._id} data={v} />
         ))}
       </View>

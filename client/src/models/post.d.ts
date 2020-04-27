@@ -1,4 +1,4 @@
-import { IUserBase } from './user'
+import { IUserBase } from "./user"
 // 创建时
 export interface IPostCreate {
   img: string
@@ -12,7 +12,7 @@ export interface IPostBase extends IPostCreate {
   openid: string //controller层添加
   createDate: number //controller层添加
   updateDate: number //controller层添加
-  readed?: number //查看次数
+  view: number //查看次数
 }
 
 // 在前端列表展示的

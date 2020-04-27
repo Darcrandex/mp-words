@@ -1,8 +1,8 @@
 {
-  "name": "taro-test",
+  "name": "mp-words",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "A wechat mini program, Just Words",
   "templateInfo": {
     "name": "wxcloud",
     "typescript": true,
@@ -28,7 +28,7 @@
     "dev:qq": "npm run build:qq -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch"
   },
-  "author": "",
+  "author": "darcrand",
   "license": "MIT",
   "dependencies": {
     "@tarojs/components": "2.1.6",

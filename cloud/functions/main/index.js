@@ -11,6 +11,9 @@ const PAGE_SIZE = 10;
 exports.main = async (event, context) => {
   const app = new TcbRouter({ event });
   const db = cloud.database();
+  const _ = db.command;
+  const $ = _.aggregate;
+
   // 当前用户openid
   const { OPENID: openid } = cloud.getWXContext();
   const tableUser = db.collection("user");
@@ -128,8 +131,6 @@ exports.main = async (event, context) => {
 
   // 按类型查询(针对当前用户)
   app.router("post/list-by-type", async (ctx) => {
-    const _ = db.command;
-    const $ = _.aggregate;
     const { page = 1, type = "all" } = ctx._req.event;
     //type: 'all' | 'like' | 'collect'
 
@@ -253,6 +254,9 @@ exports.main = async (event, context) => {
   app.router("post/detail", async (ctx) => {
     const { id = "" } = ctx._req.event;
     try {
+      // 增加查阅次数
+      await tablePost.doc(id).update({ data: { view: _.inc(1) } });
+
       let { list = [] } = await tablePost
         .aggregate()
         .match({ _id: db.command.eq(id) })

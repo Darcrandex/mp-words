@@ -2,16 +2,16 @@
  * @description 帖子详情
  */
 
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
-import { inject, observer } from '@tarojs/mobx'
-import { apiGetAdmin } from '@/apis/user'
-import { apiGetPost } from '@/apis/post'
-import { IPost } from '@/models/post'
-import { IUserStore } from '@/store'
-import { numberAbbreviation, dateFormatEN } from '@/utils'
+import Taro, { Component, Config } from "@tarojs/taro"
+import { View, Text, Image } from "@tarojs/components"
+import { inject, observer } from "@tarojs/mobx"
+import { apiGetAdmin } from "@/apis/user"
+import { apiGetPost } from "@/apis/post"
+import { IPost } from "@/models/post"
+import { IUserStore } from "@/store"
+import { numberAbbreviation, dateFormatEN } from "@/utils"
 
-import './styles.less'
+import "./styles.less"
 
 interface IState {
   data: IPost
@@ -20,34 +20,34 @@ interface IState {
 
 const DESIGN_WIDTH = 750
 
-@inject('userStore')
+@inject("userStore")
 @observer
 class PostDetail extends Component<{ userStore: IUserStore }, IState> {
   state = {
     data: {
-      img: '',
-      content: '',
-      from: '',
-      _id: '',
-      openid: '',
+      img: "",
+      content: "",
+      from: "",
+      _id: "",
+      openid: "",
       createDate: 0,
       updateDate: 0,
-      readed: 0,
+      view: 0,
       likeTotal: 0,
       collectTotal: 0,
       like: false,
       collect: false,
       author: {
-        avatarUrl: '',
-        nickName: '',
-      },
+        avatarUrl: "",
+        nickName: ""
+      }
     },
     imageLoaded: false,
     avatarLoaded: false,
 
     editable: false,
 
-    imageRealHeight: 0.5 * DESIGN_WIDTH + 'rpx',
+    imageRealHeight: 0.5 * DESIGN_WIDTH + "rpx"
   }
 
   componentDidShow() {
@@ -55,32 +55,32 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
   }
 
   config: Config = {
-    navigationBarTitleText: 'Detail',
+    navigationBarTitleText: "Detail"
   }
 
   getDetial = async () => {
     try {
-      const { id = '' } = this.$router.params
+      const { id = "" } = this.$router.params
       const data = await apiGetPost(id)
       const admins = await apiGetAdmin()
       const { openid } = this.props.userStore.info
-      const editable = data.openid === openid || admins.some(v => v.openid === data.openid)
+      const editable = data.openid === openid || admins.some((v) => v.openid === data.openid)
 
       this.setState({ data, editable })
     } catch (err) {
-      console.log('获取帖子详情失败', err)
+      console.log("获取帖子详情失败", err)
     }
   }
 
-  onImageLoad = (key: 'imageLoaded' | 'avatarLoaded' = 'imageLoaded') => event => {
+  onImageLoad = (key: "imageLoaded" | "avatarLoaded" = "imageLoaded") => (event) => {
     this.setState({ [key]: true })
 
-    if (key === 'imageLoaded') {
+    if (key === "imageLoaded") {
       const {
-        detail: { width, height },
+        detail: { width, height }
       } = event
       const h = Math.floor((DESIGN_WIDTH * height) / width)
-      this.setState({ imageRealHeight: h + 'rpx' })
+      this.setState({ imageRealHeight: h + "rpx" })
     }
   }
 
@@ -94,9 +94,9 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
         <View className="img-wrapper">
           <Image
             src={data.img}
-            className={imageLoaded ? 'img show' : 'img'}
+            className={imageLoaded ? "img show" : "img"}
             mode="aspectFill"
-            onLoad={this.onImageLoad('imageLoaded')}
+            onLoad={this.onImageLoad("imageLoaded")}
             style={{ height: imageRealHeight }}
           />
         </View>
@@ -110,7 +110,7 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
 
         <View className="info-bar">
           <View className="at-icon at-icon-eye info-ico"></View>
-          <Text className="info-value">{numberAbbreviation(data.readed || 0)}</Text>
+          <Text className="info-value">{numberAbbreviation(data.view)}</Text>
           <View className="at-icon at-icon-heart info-ico"></View>
           <Text className="info-value">{numberAbbreviation(data.likeTotal)}</Text>
           <View className="at-icon at-icon-star info-ico"></View>
@@ -120,12 +120,16 @@ class PostDetail extends Component<{ userStore: IUserStore }, IState> {
         </View>
 
         <View className="operation-bar">
-          <View className={data.like ? 'at-icon at-icon-heart-2 btn' : 'at-icon at-icon-heart btn'}></View>
-          <View className={data.collect ? 'at-icon at-icon-star-2 btn' : 'at-icon at-icon-star btn'}></View>
+          <View
+            className={data.like ? "at-icon at-icon-heart-2 btn" : "at-icon at-icon-heart btn"}
+          ></View>
+          <View
+            className={data.collect ? "at-icon at-icon-star-2 btn" : "at-icon at-icon-star btn"}
+          ></View>
           {editable && (
             <View
               className="at-icon at-icon-edit btn"
-              onClick={() => Taro.navigateTo({ url: '/pages/post-edit/index?id=' + data._id })}
+              onClick={() => Taro.navigateTo({ url: "/pages/post-edit/index?id=" + data._id })}
             ></View>
           )}
         </View>
