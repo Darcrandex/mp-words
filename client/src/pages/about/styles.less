@@ -1,4 +1,4 @@
-@import '~@/styles/variables.less';
+@import "~@/styles/variables.less";
 @logo-size: 200px;
 
 .container {
@@ -6,13 +6,27 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 60vh;
 }
 
 .logo {
   width: @logo-size;
   height: @logo-size;
-  margin-bottom: 30px;
+  margin-bottom: @spacing;
   border-radius: 0.5 * @logo-size;
   background-color: @empty-background-color;
+}
+
+.title {
+  margin-bottom: 2 * @spacing;
+  font-size: 40px;
+  font-weight: bold;
+  color: @article-color;
+}
+
+.sub_text {
+  font-style: italic;
+  color: @secondary-text-color;
+  font-size: 32px;
+  line-height: 1.5;
 }
