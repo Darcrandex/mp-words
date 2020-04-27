@@ -1,0 +1,27 @@
+@import '~@/styles/variables.less';
+
+.tabs-container {
+  display: flex;
+  justify-content: space-between;
+  margin: @spacing;
+  background-color: #fff;
+}
+
+.tab-item {
+  width: 25%;
+  padding: 0.25 * @spacing 0;
+  border-radius: 10px;
+  transition: all 0.25s;
+  background-color: #fff;
+
+  &.active {
+    background-color: @gray;
+  }
+}
+
+.tab-item-text {
+  display: block;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 26px;
+}

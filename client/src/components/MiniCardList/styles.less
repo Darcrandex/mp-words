@@ -1,0 +1,34 @@
+@import '~@/styles/variables.less';
+
+.container {
+  display: flex;
+  align-items: start;
+  margin-top: @spacing;
+  background-color: @gray;
+
+  &.hide {
+    display: none;
+  }
+}
+
+.mini-card-list-col {
+  width: 375 - (1.5 * @spacing);
+  margin-top: @spacing;
+
+  &.left {
+    margin-left: @spacing;
+    margin-right: 0.5 * @spacing;
+  }
+
+  &.right {
+    margin-left: 0.5 * @spacing;
+    margin-right: @spacing;
+  }
+}
+
+.empty-tips {
+  width: 100%;
+  padding: @spacing 0;
+  text-align: center;
+  color: @secondary-text-color;
+}

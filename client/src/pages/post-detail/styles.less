@@ -1,0 +1,69 @@
+@import '~@/styles/variables.less';
+
+.container {
+  &:extend(.full_screen_bottom_fixed);
+  min-height: 100vh;
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: @empty-background-color;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  opacity: 0;
+}
+
+.show {
+  transition: all 0.5s 0.1s;
+  opacity: 1;
+}
+
+.from-text,
+.content-text,
+.info-bar {
+  margin: @spacing;
+}
+
+.from-text {
+  font-weight: bold;
+}
+
+.content-text {
+  color: @article-color;
+}
+
+.info-bar {
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  color: @secondary-text-color;
+}
+
+.info-ico {
+  font-size: 30px;
+}
+
+.info-value {
+  margin: 0 20px 0 5px;
+}
+
+.info-date {
+  margin-left: auto;
+}
+
+.operation-bar {
+  display: flex;
+  justify-content: center;
+  padding: @spacing 0;
+
+  .btn {
+    padding: 0.5 * @spacing;
+    color: @theme-color;
+    font-size: 60px;
+  }
+}

@@ -1,0 +1,40 @@
+// 项目主体样式(750px 设计尺寸)
+
+// 全面屏适配-底部高度
+@full-screen-bottom-height: 40px;
+
+// 间隙
+@spacing: 40px;
+
+// 主题色
+@theme-color: #ff5252;
+
+// 主文字颜色
+@article-color: #333;
+
+// 次要文字颜色
+@secondary-text-color: #6a737d;
+
+// 空内容背景色
+@empty-background-color: #ddd;
+
+// 所有边框的颜色
+@border-color: #e0e0e0;
+
+// 灰色背景
+@gray: #f0f0f0;
+
+// 去除button默认样式
+.clear_button {
+  margin: 0;
+  background-color: transparent;
+  line-height: 1;
+  &::after {
+    display: none;
+  }
+}
+
+// 全面屏底部高度修正
+.full_screen_bottom_fixed {
+  padding-bottom: 64px;
+}

@@ -1,0 +1,36 @@
+@import '~@/styles/variables.less';
+
+@accordion-height: 54px;
+@dot-size: 20px;
+
+.msg-item {
+  position: relative;
+  padding-left: @spacing;
+}
+
+.dot {
+  position: absolute;
+  top: @accordion-height;
+  left: 0.5 * @spacing;
+  width: @dot-size;
+  height: @dot-size;
+  border-radius: 50%;
+  background-color: @theme-color;
+  box-shadow: 0 0.5 * @dot-size @dot-size rgba(@theme-color, 0.25);
+  transform: translateY(-50%);
+  opacity: 0;
+  visibility: hidden;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.content {
+  margin: @spacing;
+  margin-left: 0;
+  padding: 0.5 * @spacing;
+  border-radius: 10px;
+  background-color: @gray;
+}

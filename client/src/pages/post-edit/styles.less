@@ -1,0 +1,33 @@
+@import '~@/styles/variables.less';
+
+@btn-height: 92px; //按750的设计稿
+
+.container {
+  padding: @spacing;
+  padding-bottom: @btn-height + (2 * @spacing);
+
+  &.full-screen {
+    padding-bottom: @btn-height + (2 * @spacing) + @full-screen-bottom-height;
+  }
+}
+
+.submit-bar {
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: @spacing 0;
+  box-shadow: 0 0 10px #333;
+  background-color: #fff;
+
+  &.full-screen {
+    padding-bottom: @spacing + @full-screen-bottom-height;
+  }
+}
+
+.btn {
+  width: 375 - 2 * @spacing;
+  margin: 0 @spacing;
+}

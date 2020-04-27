@@ -1,0 +1,110 @@
+@import '~@/styles/variables.less';
+
+@empty-size: 30vh;
+@avatar-size: 180px;
+@avatar-shadow-size: 20px;
+
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.background-image-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 50vh;
+  background-color: @gray;
+}
+
+.background-image:extend(.fade-image) {
+  width: 100%;
+  height: 100%;
+}
+
+.empty-fixed {
+  // 这个内容用来补充头像上方空白的地方
+  height: @empty-size;
+  pointer-events: none;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh - @empty-size;
+  background-color: #fff;
+}
+
+.avatar-container {
+  height: @avatar-size;
+  margin-bottom: -0.5 * @avatar-size + @spacing;
+}
+
+.avatar-wrapper {
+  margin: 0 auto;
+  width: @avatar-size;
+  height: @avatar-size;
+  border-radius: 50%;
+  border: 8px solid #fff;
+  background-color: @empty-background-color;
+  box-shadow: 0 0 @avatar-shadow-size #333;
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+.avatar:extend(.fade-image) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.info-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: @article-color;
+}
+
+.gender-ico {
+  width: 36px;
+  height: 36px;
+  margin-left: 20px;
+}
+
+.addr-line {
+  display: block;
+  text-align: center;
+  font-size: 26px;
+  color: @secondary-text-color;
+}
+
+.login-button {
+  margin: @spacing;
+}
+
+// 图片淡入
+.fade-image {
+  opacity: 0;
+}
+.image-loaded {
+  transition: all 0.5s 0.1s;
+  opacity: 1;
+}
+
+.top-menus {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 0.5 * @spacing;
+}
+
+.menu-btn {
+  padding: 0.5 * @spacing;
+  color: #fff;
+}
