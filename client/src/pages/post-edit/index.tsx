@@ -141,7 +141,7 @@ export default class PostEdit extends Component<IProps, IState> {
                 this.setState({ visibleRemove: true })
               }}
             >
-              Remove0000
+              Remove
             </AtButton>
           </View>
           <View className="btn">

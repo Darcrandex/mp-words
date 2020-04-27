@@ -3,33 +3,34 @@
  * @description 背景图片使用'Image'而不是'background-image'是因为云图片不能使用背景图片
  */
 
-import Taro, { Component, Config } from '@tarojs/taro'
-import { observer, inject } from '@tarojs/mobx'
-import { View, Text, Image } from '@tarojs/components'
-import { AtButton, AtIcon, AtBadge } from 'taro-ui'
+import Taro, { Component, Config } from "@tarojs/taro"
+import { observer, inject } from "@tarojs/mobx"
+import { View, Text, Image } from "@tarojs/components"
+import { AtButton, AtIcon, AtBadge } from "taro-ui"
 
-import { IUserStore, ITypePostStore } from '@/store'
-import Divider from '@/components/Divider'
-import Tabs, { ITabItem } from '@/components/Tabs'
-import MiniCardList from '@/components/MiniCardList'
-import { getRealAvatar } from '@/utils'
-import { QueryType } from '@/apis/post'
+import { IUserStore, ITypePostStore } from "@/store"
+import Divider from "@/components/Divider"
+import Tabs, { ITabItem } from "@/components/Tabs"
+import MiniCardList from "@/components/MiniCardList"
+import { getRealAvatar } from "@/utils"
+import { QueryType } from "@/apis/post"
 
-import icoMale from '@/assets/icons/ico-male.png'
-import icoFemale from '@/assets/icons/ico-female.png'
+import icoMale from "@/assets/icons/ico-male.png"
+import icoFemale from "@/assets/icons/ico-female.png"
 
-import './styles.less'
+import "./styles.less"
 
-const defaultCover = 'cloud://cloud-db-0kmga.636c-cloud-db-0kmga-1301275025/account-default-cover.jpg'
+const defaultCover =
+  "cloud://cloud-db-0kmga.636c-cloud-db-0kmga-1301275025/account-default-cover.jpg"
 
-const genderIcos = ['', icoMale, icoFemale]
+const genderIcos = ["", icoMale, icoFemale]
 
 interface IProps {
   userStore: IUserStore
   typePostStore: ITypePostStore
 }
 
-@inject('userStore', 'typePostStore')
+@inject("userStore", "typePostStore")
 @observer
 export default class Admin extends Component<IProps> {
   state = {
@@ -38,7 +39,7 @@ export default class Admin extends Component<IProps> {
     backgroundLoaded: false,
     avatarLoaded: false,
 
-    list: [],
+    list: []
   }
 
   componentDidMount() {
@@ -46,16 +47,16 @@ export default class Admin extends Component<IProps> {
   }
 
   config: Config = {
-    navigationBarTitleText: 'Mine',
+    navigationBarTitleText: "Mine",
     enablePullDownRefresh: true,
-    onReachBottomDistance: 100,
+    onReachBottomDistance: 100
   }
 
   async onPullDownRefresh() {
     try {
       await this.onInit()
     } catch (err) {
-      console.error('加载失败', err)
+      console.error("加载失败", err)
     } finally {
       Taro.stopPullDownRefresh()
     }
@@ -65,10 +66,10 @@ export default class Admin extends Component<IProps> {
     const { current } = this.state
 
     try {
-      const types = ['all', 'like', 'collect']
+      const types = ["all", "like", "collect"]
       await this.props.typePostStore.loadMore(types[current] as QueryType)
     } catch (err) {
-      console.error('加载失败', err)
+      console.error("加载失败", err)
     }
   }
 
@@ -77,13 +78,13 @@ export default class Admin extends Component<IProps> {
       await this.props.userStore.login()
       await this.props.typePostStore.init()
     } catch (err) {
-      console.log('获取失败', err)
+      console.log("获取失败", err)
     }
   }
 
   authorize = async (event: any) => {
     const {
-      detail: { userInfo = null },
+      detail: { userInfo = null }
     } = event
 
     try {
@@ -93,7 +94,7 @@ export default class Admin extends Component<IProps> {
         this.onInit()
       }
     } catch (err) {
-      console.error('授权失败')
+      console.error("授权失败")
     }
   }
 
@@ -101,14 +102,14 @@ export default class Admin extends Component<IProps> {
     this.setState({ current: index })
   }
 
-  onImageLoad = (key: 'background' | 'avatar') => {
+  onImageLoad = (key: "background" | "avatar") => {
     this.setState({ [`${key}Loaded`]: true })
   }
 
   render() {
     const {
       info: { nickName, gender, avatarUrl, city, province, country, cover },
-      isLogin,
+      isLogin
     } = this.props.userStore
     const { allState, likeState, collectState } = this.props.typePostStore
 
@@ -116,9 +117,9 @@ export default class Admin extends Component<IProps> {
     const genderUrl = genderIcos[gender || 0]
 
     const tabs: ITabItem[] = [
-      { title: 'words', count: allState.total },
-      { title: 'like', count: likeState.total },
-      { title: 'collect', count: collectState.total },
+      { title: "words", count: allState.total },
+      { title: "like", count: likeState.total },
+      { title: "collect", count: collectState.total }
     ]
 
     return (
@@ -126,9 +127,9 @@ export default class Admin extends Component<IProps> {
         <View className="background-image-wrapper">
           <Image
             src={cover || defaultCover}
-            className={backgroundLoaded ? 'background-image image-loaded' : 'background-image'}
+            className={backgroundLoaded ? "background-image image-loaded" : "background-image"}
             mode="aspectFill"
-            onLoad={() => this.onImageLoad('background')}
+            onLoad={() => this.onImageLoad("background")}
           />
         </View>
 
@@ -139,8 +140,8 @@ export default class Admin extends Component<IProps> {
             <View className="avatar-wrapper">
               <Image
                 src={getRealAvatar(avatarUrl)}
-                className={avatarLoaded ? 'avatar image-loaded' : 'avatar'}
-                onLoad={() => this.onImageLoad('avatar')}
+                className={avatarLoaded ? "avatar image-loaded" : "avatar"}
+                onLoad={() => this.onImageLoad("avatar")}
               />
             </View>
           </View>
@@ -187,7 +188,7 @@ export default class Admin extends Component<IProps> {
             <View
               className="menu-btn"
               onClick={() => {
-                Taro.navigateTo({ url: '/pages/settings/index' })
+                Taro.navigateTo({ url: "/pages/settings/index" })
               }}
             >
               <AtIcon value="settings" />

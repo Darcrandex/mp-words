@@ -1,12 +1,13 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { inject, observer } from '@tarojs/mobx'
-import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem } from 'taro-ui'
-import { apiGetAdmin } from '@/apis/user'
-import { IUserStore } from '@/store'
+import Taro, { Component, Config } from "@tarojs/taro"
+import { inject, observer } from "@tarojs/mobx"
+import { View, Text } from "@tarojs/components"
+import { AtList, AtListItem } from "taro-ui"
+import { apiGetAdmin } from "@/apis/user"
+import { IUserStore } from "@/store"
+import checkUpdate from "@/utils/check-update"
 
-import './styles.less'
-@inject('userStore')
+import "./styles.less"
+@inject("userStore")
 @observer
 export default class Settings extends Component<{ userStore: IUserStore }> {
   state = { isAdmin: false }
@@ -16,14 +17,14 @@ export default class Settings extends Component<{ userStore: IUserStore }> {
   }
 
   config: Config = {
-    navigationBarTitleText: 'Settings',
+    navigationBarTitleText: "Settings"
   }
 
   onInit = async () => {
     try {
       const admins = await apiGetAdmin()
       this.setState({
-        isAdmin: admins.some(v => v.openid === this.props.userStore.info.openid),
+        isAdmin: admins.some((v) => v.openid === this.props.userStore.info.openid)
       })
     } catch (err) {}
   }
@@ -39,7 +40,7 @@ export default class Settings extends Component<{ userStore: IUserStore }> {
               title="About"
               arrow="right"
               onClick={() => {
-                Taro.navigateTo({ url: '/pages/about/index' })
+                Taro.navigateTo({ url: "/pages/about/index" })
               }}
             />
             {/* <AtListItem title="Account Cover" arrow="right" /> */}
@@ -53,11 +54,11 @@ export default class Settings extends Component<{ userStore: IUserStore }> {
                 title="Admin"
                 arrow="right"
                 onClick={() => {
-                  Taro.navigateTo({ url: '/pages/admin-center/index' })
+                  Taro.navigateTo({ url: "/pages/admin-center/index" })
                 }}
               />
             )}
-            <AtListItem title="Check Update" extraText="v0.1" />
+            <AtListItem title="Check Update" extraText="v0.1" onClick={() => checkUpdate(true)} />
           </AtList>
         </View>
 
